@@ -2,24 +2,24 @@ version: '3'
 services:
  rabbitmq:
   image: rabbitmq:3-management
+  network_mode: "host"
   restart: always
   ports:
-    - 5672:5672 # port for the daemon API
+    - 5672:5672
     - 15672:15672
  consumer:
   build: consumer
+  network_mode: "host"
   restart: on-failure
   depends_on:
     - rabbitmq
-  links:
-    - rabbitmq
  app:
   build: app
+  network_mode: "host"
   restart: on-failure
   ports:
     - 5000:5000
   depends_on: 
     - rabbitmq
-  links:
-    - rabbitmq
+
  

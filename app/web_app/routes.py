@@ -50,7 +50,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         text = user.get_auth_token()
-        connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))  # !!!!!
+        connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))  # !!!!!
         channel = connection.channel()
         channel.queue_declare(queue='confirming_email')
         channel.basic_publish(exchange='',

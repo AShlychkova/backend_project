@@ -5,7 +5,7 @@ import time
 
 time.sleep(10)
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq')) ##!!!
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost')) ##!!!
 channel = connection.channel()
 channel.queue_declare(queue='confirming_email')
 
