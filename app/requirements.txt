@@ -17,3 +17,6 @@ WTForms==2.2.1
 flask-login
 gunicorn
 psycopg2
+typing
+pika
+email

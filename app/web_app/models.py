@@ -27,9 +27,18 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def get_auth_token(self):
-        max_age = config.TOCKEN_DURATION.total_seconds()
-        data = [str(self.id), self.password]
+        data = ['^-^', str(self.password_hash),  str(self.username), str(self.email), str(config.Config.SALT)]
         return login_serializer.dumps(data)
+
+    def load_user(self, token):
+        max_age = config.Config.TOCKEN_DURATION
+        data = login_serializer.loads(token, max_age=max_age)
+        if len(data) == 5 and data[4] == config.Config.SALT:
+            self.password_hash = data[1]
+            self.username = data[2]
+            self.email = data[3]
+            return data[0]
+        return 0
 
 
 class Post(db.Model):
